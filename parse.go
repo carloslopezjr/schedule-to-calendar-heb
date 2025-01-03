@@ -23,14 +23,14 @@ type Event struct {
 }
 
 
-func parse(path string) []interface{} {
+func parse(path string) []Event {
 	// Read the entire file into memory
 	data, err := os.ReadFile(path)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	var dates []interface{}
+	var dates []Event
 
 	// Create a scanner to read the file line by line
 	scanner := bufio.NewScanner(strings.NewReader(string(data)))
@@ -60,7 +60,7 @@ func parse(path string) []interface{} {
 			mon := Event {
 				Number: line[0:2],
 				Day: line[3:5],
-				Start_hour: line[6:7],
+				Start_hour: line[6:7], // this needs to be changed. If there's two digits in the hour, it will bug out
 				Start_minute: line[8:10],
 				S_AM_PM: S_AM_PM_bool,
 				End_hour: line[12:13],
