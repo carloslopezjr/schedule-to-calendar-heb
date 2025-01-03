@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	//"fmt"
 )
 
 
@@ -11,11 +11,9 @@ func main() {
 	filepath := "/Users/carlos/Desktop/schedule-to-calendar-heb/imessage_data/54694.txt" // change to desired txt path
 	data := parse(filepath)
 
-	fmt.Println(data) // debugging purposes
+	//cfmt.Println(data) // debugging purposes
 
 	// run google calendar process
-
-
-
+	run_calendar(data)
 
 }
