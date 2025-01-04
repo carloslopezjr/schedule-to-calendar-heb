@@ -119,7 +119,7 @@ func insertEvent(srv *calendar.Service, event Event) {
 	fmt.Println(endTime)
 	calendarEvent := &calendar.Event{
 		Summary:     fmt.Sprintf("H-E-B (Work)"),
-		Location:    "{insert location}", // Example location
+		Location:    "24165 W I-10 #300, San Antonio, TX 78257", // Example location
 		Description: fmt.Sprintf("Generated event for %s", event.Day),
 		Start: &calendar.EventDateTime{
 			DateTime: startTime,
