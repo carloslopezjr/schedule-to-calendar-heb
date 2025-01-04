@@ -1,0 +1,1 @@
+current status: fix duplicate issue when creating events ; fix bug to parse month, day, year correctly ; add new implementation to run program every friday if possible (if device is on) ; create log sheet to track uploads and routine checks for new schedule info
