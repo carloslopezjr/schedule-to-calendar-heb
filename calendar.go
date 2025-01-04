@@ -139,6 +139,8 @@ func insertEvent(srv *calendar.Service, event Event) {
 	fmt.Printf("Event created: %s\n", createdEvent.HtmlLink)
 }
 
+
+
 func run_calendar(data []Event) {
 	ctx := context.Background()
 	b, err := os.ReadFile("credentials.json")
@@ -158,13 +160,10 @@ func run_calendar(data []Event) {
 		log.Fatalf("Unable to retrieve Calendar client: %v", err)
 	}
 
-	fmt.Println(data)
-
-	// this is where code will start
+	// fmt.Println(data)
 	for _, info := range data {
 		insertEvent(srv, info)
 	}
-		
 
 	
 }
