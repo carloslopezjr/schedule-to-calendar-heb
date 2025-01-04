@@ -8,6 +8,7 @@ import (
 	"log"
 	"strings"
 	"bufio"
+	"unicode"
 )
 
 // create a struct that will be created each time 
@@ -45,26 +46,63 @@ func parse(path string) []Event {
 			var S_AM_PM_bool bool
 			var E_AM_PM_bool bool
 
-			if line[10:11] == "P" {
+			// Split by spaces
+			parts := strings.Fields(line) // "06", "MO", "5:45A-12:45P"
+
+			// Extract individual parts
+			firstTwoDigits := parts[0] // "06"
+			day := parts[1]            // "MO"
+			timeRange := parts[2]      // "5:45A-12:45P"
+
+			// Split time range further
+			times := strings.Split(timeRange, "-") // ["5:45A", "12:45P"]
+
+			// Function to extract hour, minute, and AM/PM from a time string
+			extractTime := func(time string) (string, string, string) {
+				hour := ""
+				minute := ""
+				ampm := ""
+
+				// Extract hour and minute
+				for i, char := range time {
+					if unicode.IsDigit(char) {
+						hour += string(char)
+					} else if char == ':' {
+						minute = time[i+1 : i+3] // Get minutes after ":"
+						ampm = time[i+3:]       // Get AM/PM part
+						break
+					}
+				}
+
+				return hour, minute, ampm
+			}
+
+
+			// Extract times
+			startHour, startMinute, startAMPM := extractTime(times[0]) // "5:45A"
+			endHour, endMinute, endAMPM := extractTime(times[1])       // "12:45P"
+
+
+			if startAMPM == "P" {
 				S_AM_PM_bool = true
 			} else {
 				S_AM_PM_bool = false
 			}
 
-			if line[16:17] == "P" {
+			if endAMPM == "P" {
 				E_AM_PM_bool = true
 			} else {
 				E_AM_PM_bool = false
 			}
 
 			mon := Event {
-				Number: line[0:2],
-				Day: line[3:5],
-				Start_hour: line[6:7], // this needs to be changed. If there's two digits in the hour, it will bug out
-				Start_minute: line[8:10],
+				Number: firstTwoDigits,
+				Day: day,
+				Start_hour: startHour, // this needs to be changed. If there's two digits in the hour, it will bug out
+				Start_minute: startMinute,
 				S_AM_PM: S_AM_PM_bool,
-				End_hour: line[12:13],
-				End_minute: line[14:16],
+				End_hour: endHour,
+				End_minute: endMinute,
 				E_AM_PM: E_AM_PM_bool,
 			}
 			dates = append(dates, mon)
@@ -74,26 +112,63 @@ func parse(path string) []Event {
 			var S_AM_PM_bool bool
 			var E_AM_PM_bool bool
 
-			if line[10:11] == "P" {
+			// Split by spaces
+			parts := strings.Fields(line) // "06", "MO", "5:45A-12:45P"
+
+			// Extract individual parts
+			firstTwoDigits := parts[0] // "06"
+			day := parts[1]            // "MO"
+			timeRange := parts[2]      // "5:45A-12:45P"
+
+			// Split time range further
+			times := strings.Split(timeRange, "-") // ["5:45A", "12:45P"]
+
+			// Function to extract hour, minute, and AM/PM from a time string
+			extractTime := func(time string) (string, string, string) {
+				hour := ""
+				minute := ""
+				ampm := ""
+
+				// Extract hour and minute
+				for i, char := range time {
+					if unicode.IsDigit(char) {
+						hour += string(char)
+					} else if char == ':' {
+						minute = time[i+1 : i+3] // Get minutes after ":"
+						ampm = time[i+3:]       // Get AM/PM part
+						break
+					}
+				}
+
+				return hour, minute, ampm
+			}
+
+
+			// Extract times
+			startHour, startMinute, startAMPM := extractTime(times[0]) // "5:45A"
+			endHour, endMinute, endAMPM := extractTime(times[1])       // "12:45P"
+
+
+			if startAMPM == "P" {
 				S_AM_PM_bool = true
 			} else {
 				S_AM_PM_bool = false
 			}
 
-			if line[16:17] == "P" {
+			if endAMPM == "P" {
 				E_AM_PM_bool = true
 			} else {
 				E_AM_PM_bool = false
 			}
 
 			tue := Event {
-				Number: line[0:2],
-				Day: line[3:5],
-				Start_hour: line[6:7],
-				Start_minute: line[8:10],
+				Number: firstTwoDigits,
+				Day: day,
+				Start_hour: startHour, // this needs to be changed. If there's two digits in the hour, it will bug out
+				Start_minute: startMinute,
 				S_AM_PM: S_AM_PM_bool,
-				End_hour: line[12:13],
-				End_minute: line[14:16],
+				End_hour: endHour,
+				End_minute: endMinute,
 				E_AM_PM: E_AM_PM_bool,
 			}
 			dates = append(dates, tue)
@@ -103,26 +178,63 @@ func parse(path string) []Event {
 			var S_AM_PM_bool bool
 			var E_AM_PM_bool bool
 
-			if line[10:11] == "P" {
+			// Split by spaces
+			parts := strings.Fields(line) // "06", "MO", "5:45A-12:45P"
+
+			// Extract individual parts
+			firstTwoDigits := parts[0] // "06"
+			day := parts[1]            // "MO"
+			timeRange := parts[2]      // "5:45A-12:45P"
+
+			// Split time range further
+			times := strings.Split(timeRange, "-") // ["5:45A", "12:45P"]
+
+			// Function to extract hour, minute, and AM/PM from a time string
+			extractTime := func(time string) (string, string, string) {
+				hour := ""
+				minute := ""
+				ampm := ""
+
+				// Extract hour and minute
+				for i, char := range time {
+					if unicode.IsDigit(char) {
+						hour += string(char)
+					} else if char == ':' {
+						minute = time[i+1 : i+3] // Get minutes after ":"
+						ampm = time[i+3:]       // Get AM/PM part
+						break
+					}
+				}
+
+				return hour, minute, ampm
+			}
+
+
+			// Extract times
+			startHour, startMinute, startAMPM := extractTime(times[0]) // "5:45A"
+			endHour, endMinute, endAMPM := extractTime(times[1])       // "12:45P"
+
+
+			if startAMPM == "P" {
 				S_AM_PM_bool = true
 			} else {
 				S_AM_PM_bool = false
 			}
 
-			if line[16:17] == "P" {
+			if endAMPM == "P" {
 				E_AM_PM_bool = true
 			} else {
 				E_AM_PM_bool = false
 			}
 
 			wed := Event {
-				Number: line[0:2],
-				Day: line[3:5],
-				Start_hour: line[6:7],
-				Start_minute: line[8:10],
+				Number: firstTwoDigits,
+				Day: day,
+				Start_hour: startHour, // this needs to be changed. If there's two digits in the hour, it will bug out
+				Start_minute: startMinute,
 				S_AM_PM: S_AM_PM_bool,
-				End_hour: line[12:13],
-				End_minute: line[14:16],
+				End_hour: endHour,
+				End_minute: endMinute,
 				E_AM_PM: E_AM_PM_bool,
 			}
 			dates = append(dates, wed)
@@ -132,26 +244,63 @@ func parse(path string) []Event {
 			var S_AM_PM_bool bool
 			var E_AM_PM_bool bool
 
-			if line[10:11] == "P" {
+			// Split by spaces
+			parts := strings.Fields(line) // "06", "MO", "5:45A-12:45P"
+
+			// Extract individual parts
+			firstTwoDigits := parts[0] // "06"
+			day := parts[1]            // "MO"
+			timeRange := parts[2]      // "5:45A-12:45P"
+
+			// Split time range further
+			times := strings.Split(timeRange, "-") // ["5:45A", "12:45P"]
+
+			// Function to extract hour, minute, and AM/PM from a time string
+			extractTime := func(time string) (string, string, string) {
+				hour := ""
+				minute := ""
+				ampm := ""
+
+				// Extract hour and minute
+				for i, char := range time {
+					if unicode.IsDigit(char) {
+						hour += string(char)
+					} else if char == ':' {
+						minute = time[i+1 : i+3] // Get minutes after ":"
+						ampm = time[i+3:]       // Get AM/PM part
+						break
+					}
+				}
+
+				return hour, minute, ampm
+			}
+
+
+			// Extract times
+			startHour, startMinute, startAMPM := extractTime(times[0]) // "5:45A"
+			endHour, endMinute, endAMPM := extractTime(times[1])       // "12:45P"
+
+
+			if startAMPM == "P" {
 				S_AM_PM_bool = true
 			} else {
 				S_AM_PM_bool = false
 			}
 
-			if line[16:17] == "P" {
+			if endAMPM == "P" {
 				E_AM_PM_bool = true
 			} else {
 				E_AM_PM_bool = false
 			}
 
 			thu := Event {
-				Number: line[0:2],
-				Day: line[3:5],
-				Start_hour: line[6:7],
-				Start_minute: line[8:10],
+				Number: firstTwoDigits,
+				Day: day,
+				Start_hour: startHour, // this needs to be changed. If there's two digits in the hour, it will bug out
+				Start_minute: startMinute,
 				S_AM_PM: S_AM_PM_bool,
-				End_hour: line[12:13],
-				End_minute: line[14:16],
+				End_hour: endHour,
+				End_minute: endMinute,
 				E_AM_PM: E_AM_PM_bool,
 			}
 			dates = append(dates, thu)
@@ -161,26 +310,63 @@ func parse(path string) []Event {
 			var S_AM_PM_bool bool
 			var E_AM_PM_bool bool
 
-			if line[10:11] == "P" {
+			// Split by spaces
+			parts := strings.Fields(line) // "06", "MO", "5:45A-12:45P"
+
+			// Extract individual parts
+			firstTwoDigits := parts[0] // "06"
+			day := parts[1]            // "MO"
+			timeRange := parts[2]      // "5:45A-12:45P"
+
+			// Split time range further
+			times := strings.Split(timeRange, "-") // ["5:45A", "12:45P"]
+
+			// Function to extract hour, minute, and AM/PM from a time string
+			extractTime := func(time string) (string, string, string) {
+				hour := ""
+				minute := ""
+				ampm := ""
+
+				// Extract hour and minute
+				for i, char := range time {
+					if unicode.IsDigit(char) {
+						hour += string(char)
+					} else if char == ':' {
+						minute = time[i+1 : i+3] // Get minutes after ":"
+						ampm = time[i+3:]       // Get AM/PM part
+						break
+					}
+				}
+
+				return hour, minute, ampm
+			}
+
+
+			// Extract times
+			startHour, startMinute, startAMPM := extractTime(times[0]) // "5:45A"
+			endHour, endMinute, endAMPM := extractTime(times[1])       // "12:45P"
+
+
+			if startAMPM == "P" {
 				S_AM_PM_bool = true
 			} else {
 				S_AM_PM_bool = false
 			}
 
-			if line[16:17] == "P" {
+			if endAMPM == "P" {
 				E_AM_PM_bool = true
 			} else {
 				E_AM_PM_bool = false
 			}
 
 			fri := Event {
-				Number: line[0:2],
-				Day: line[3:5],
-				Start_hour: line[6:7],
-				Start_minute: line[8:10],
+				Number: firstTwoDigits,
+				Day: day,
+				Start_hour: startHour, // this needs to be changed. If there's two digits in the hour, it will bug out
+				Start_minute: startMinute,
 				S_AM_PM: S_AM_PM_bool,
-				End_hour: line[12:13],
-				End_minute: line[14:16],
+				End_hour: endHour,
+				End_minute: endMinute,
 				E_AM_PM: E_AM_PM_bool,
 			}
 			dates = append(dates, fri)
@@ -190,26 +376,63 @@ func parse(path string) []Event {
 			var S_AM_PM_bool bool
 			var E_AM_PM_bool bool
 
-			if line[10:11] == "P" {
+			// Split by spaces
+			parts := strings.Fields(line) // "06", "MO", "5:45A-12:45P"
+
+			// Extract individual parts
+			firstTwoDigits := parts[0] // "06"
+			day := parts[1]            // "MO"
+			timeRange := parts[2]      // "5:45A-12:45P"
+
+			// Split time range further
+			times := strings.Split(timeRange, "-") // ["5:45A", "12:45P"]
+
+			// Function to extract hour, minute, and AM/PM from a time string
+			extractTime := func(time string) (string, string, string) {
+				hour := ""
+				minute := ""
+				ampm := ""
+
+				// Extract hour and minute
+				for i, char := range time {
+					if unicode.IsDigit(char) {
+						hour += string(char)
+					} else if char == ':' {
+						minute = time[i+1 : i+3] // Get minutes after ":"
+						ampm = time[i+3:]       // Get AM/PM part
+						break
+					}
+				}
+
+				return hour, minute, ampm
+			}
+
+
+			// Extract times
+			startHour, startMinute, startAMPM := extractTime(times[0]) // "5:45A"
+			endHour, endMinute, endAMPM := extractTime(times[1])       // "12:45P"
+
+
+			if startAMPM == "P" {
 				S_AM_PM_bool = true
 			} else {
 				S_AM_PM_bool = false
 			}
 
-			if line[16:17] == "P" {
+			if endAMPM == "P" {
 				E_AM_PM_bool = true
 			} else {
 				E_AM_PM_bool = false
 			}
 
 			sat := Event {
-				Number: line[0:2],
-				Day: line[3:5],
-				Start_hour: line[6:7],
-				Start_minute: line[8:10],
+				Number: firstTwoDigits,
+				Day: day,
+				Start_hour: startHour, // this needs to be changed. If there's two digits in the hour, it will bug out
+				Start_minute: startMinute,
 				S_AM_PM: S_AM_PM_bool,
-				End_hour: line[12:13],
-				End_minute: line[14:16],
+				End_hour: endHour,
+				End_minute: endMinute,
 				E_AM_PM: E_AM_PM_bool,
 			}
 			dates = append(dates, sat)
@@ -219,26 +442,63 @@ func parse(path string) []Event {
 			var S_AM_PM_bool bool
 			var E_AM_PM_bool bool
 
-			if line[10:11] == "P" {
+			// Split by spaces
+			parts := strings.Fields(line) // "06", "MO", "5:45A-12:45P"
+
+			// Extract individual parts
+			firstTwoDigits := parts[0] // "06"
+			day := parts[1]            // "MO"
+			timeRange := parts[2]      // "5:45A-12:45P"
+
+			// Split time range further
+			times := strings.Split(timeRange, "-") // ["5:45A", "12:45P"]
+
+			// Function to extract hour, minute, and AM/PM from a time string
+			extractTime := func(time string) (string, string, string) {
+				hour := ""
+				minute := ""
+				ampm := ""
+
+				// Extract hour and minute
+				for i, char := range time {
+					if unicode.IsDigit(char) {
+						hour += string(char)
+					} else if char == ':' {
+						minute = time[i+1 : i+3] // Get minutes after ":"
+						ampm = time[i+3:]       // Get AM/PM part
+						break
+					}
+				}
+
+				return hour, minute, ampm
+			}
+
+
+			// Extract times
+			startHour, startMinute, startAMPM := extractTime(times[0]) // "5:45A"
+			endHour, endMinute, endAMPM := extractTime(times[1])       // "12:45P"
+
+
+			if startAMPM == "P" {
 				S_AM_PM_bool = true
 			} else {
 				S_AM_PM_bool = false
 			}
 
-			if line[16:17] == "P" {
+			if endAMPM == "P" {
 				E_AM_PM_bool = true
 			} else {
 				E_AM_PM_bool = false
 			}
 
 			sun := Event {
-				Number: line[0:2],
-				Day: line[3:5],
-				Start_hour: line[6:7],
-				Start_minute: line[8:10],
+				Number: firstTwoDigits,
+				Day: day,
+				Start_hour: startHour, // this needs to be changed. If there's two digits in the hour, it will bug out
+				Start_minute: startMinute,
 				S_AM_PM: S_AM_PM_bool,
-				End_hour: line[12:13],
-				End_minute: line[14:16],
+				End_hour: endHour,
+				End_minute: endMinute,
 				E_AM_PM: E_AM_PM_bool,
 			}
 			dates = append(dates, sun)
