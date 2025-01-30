@@ -119,7 +119,7 @@ func insertEvent(srv *calendar.Service, event Event) {
 	fmt.Println(endTime)
 	calendarEvent := &calendar.Event{
 		Summary:     fmt.Sprintf("H-E-B (Work)"),
-		Location:    "24165 W I-10 #300, San Antonio, TX 78257", // Example location
+		Location:    "1234 Address, City, State, Zip Code", // Example location
 		Description: fmt.Sprintf("Generated event for %s", event.Day),
 		Start: &calendar.EventDateTime{
 			DateTime: startTime,
@@ -131,7 +131,7 @@ func insertEvent(srv *calendar.Service, event Event) {
 		},
 	}
 
-	calendarId := "bec729f22cb6cf6a349c03a3a4e8aeb738b7c6fe7c760c7c9d315e6684e2e003@group.calendar.google.com"
+	calendarId := "" // insert calendar id
 	createdEvent, err := srv.Events.Insert(calendarId, calendarEvent).Do()
 	if err != nil {
 		log.Fatalf("Unable to create event. %v\n", err)
